@@ -86,11 +86,23 @@ $_SERVER['SCRIPT_FILENAME'] = $file;
 // Edge caching для гостевых страниц (без сессии)
 $guest_pages = ['index', 'download', 'changelog', 'roadmap', 'legal', 'players', 'markets', 'subscriptions', 'donate'];
 $page_name = pathinfo(basename($file), PATHINFO_FILENAME);
-$is_guest = in_array($page_name, $guest_pages, true) && empty($_COOKIE['orion_remember']) && empty($_COOKIE[session_name()]);
+$is_guest = in_array($page_name, $guest_pages, true);
+
 if ($is_guest) {
+    ob_start();
+    require $file;
+    $html = ob_get_clean();
+
+    // Убираем PHP session/cache заголовки, ставим CDN-кеш
+    header_remove('Cache-Control');
+    header_remove('Pragma');
+    header_remove('Expires');
+    header_remove('Set-Cookie');
     header('Cache-Control: public, s-maxage=60, stale-while-revalidate=300');
     header('CDN-Cache-Control: public, max-age=60');
     header('Vercel-CDN-Cache-Control: public, s-maxage=60');
-}
 
-require $file;
+    echo $html;
+} else {
+    require $file;
+}
