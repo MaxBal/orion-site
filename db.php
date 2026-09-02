@@ -909,8 +909,15 @@ $db_pass = $db_config['password'] ?? '';
 
 try {
     $dsn = "pgsql:host=$db_host;port=$db_port;dbname=$db_name";
-    // Neon и другие облачные PostgreSQL требуют SSL
-    if (str_contains($db_host, 'neon.tech') || str_contains($db_host, 'amazonaws.com')) {
+    // Neon и другие облачные PostgreSQL требуют SSL + SNI
+    if (str_contains($db_host, 'neon.tech')) {
+        $dsn .= ';sslmode=require';
+        // Neon требует endpoint ID для SNI. Извлекаем из имени хоста
+        // (первая часть до первого дефиса после 'ep-')
+        if (preg_match('/^(ep-[a-z0-9]+)-/', $db_host, $m)) {
+            $dsn .= ';options=endpoint%3D' . $m[1];
+        }
+    } elseif (str_contains($db_host, 'amazonaws.com')) {
         $dsn .= ';sslmode=require';
     }
     $pdo = new PDO($dsn, $db_user, $db_pass, [
