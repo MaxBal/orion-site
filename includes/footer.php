@@ -55,5 +55,9 @@ $footer_copy = [
 <?php foreach ($page_scripts as $script): ?>
     <script src="<?php echo htmlspecialchars($script, ENT_QUOTES, 'UTF-8'); ?>"></script>
 <?php endforeach; ?>
+<script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
 </body>
 </html>
