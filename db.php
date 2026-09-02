@@ -154,6 +154,14 @@ function ensure_site_schema($pdo) {
         return;
     }
 
+    // Быстрая проверка: если accounts существует — схема уже на месте
+    $check = $pdo->prepare("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'accounts'");
+    $check->execute();
+    if (intval($check->fetchColumn()) > 0) {
+        $ready = true;
+        return;
+    }
+
     // Триггер-функция для автообновления updated_at (аналог MySQL ON UPDATE CURRENT_TIMESTAMP)
     $pdo->exec("CREATE OR REPLACE FUNCTION update_updated_at_column()
         RETURNS TRIGGER AS $$
