@@ -49,6 +49,41 @@ $header_ticker_state = [
     'en' => $header_server_state['is_online'] ? 'Server online' : 'Server offline',
 ][$header_lang] ?? '';
 array_splice($header_ticker_items, 1, 0, [$header_ticker_state]);
+
+// Текст ссылок портала — структурная разметка, переводится явными ветками.
+$portal_labels = [
+    'ru' => ['portal' => 'Портал', 'discord' => 'Discord', 'bugs' => 'Баг-репорты', 'support' => 'Поддержка', 'login' => 'Войти', 'register' => 'создать аккаунт', 'profile' => 'Личный кабинет', 'logout' => 'Выйти', 'admin' => 'Управление'],
+    'uk' => ['portal' => 'Портал', 'discord' => 'Discord', 'bugs' => 'Баг-репорти', 'support' => 'Підтримка', 'login' => 'Увійти', 'register' => 'створити акаунт', 'profile' => 'Особистий кабінет', 'logout' => 'Вийти', 'admin' => 'Управління'],
+    'en' => ['portal' => 'Portal', 'discord' => 'Discord', 'bugs' => 'Bug reports', 'support' => 'Support', 'login' => 'Sign in', 'register' => 'create account', 'profile' => 'My account', 'logout' => 'Sign out', 'admin' => 'Admin'],
+][$header_lang] ?? [];
+
+// Пункты главного меню — структурная разметка, переводится явными ветками.
+$menu_items = [
+    'ru' => [
+        ['key' => 'index',         'label' => 'ГЛАВНАЯ',        'url' => 'index.php'],
+        ['key' => 'download',      'label' => 'ИГРА',           'url' => 'download.php'],
+        ['key' => 'players',       'label' => 'СООБЩЕСТВО',     'url' => 'players.php'],
+        ['key' => 'subscriptions', 'label' => 'ПОДПИСКИ',       'url' => 'subscriptions.php'],
+        ['key' => 'changelog',     'label' => 'ОБНОВЛЕНИЯ',     'url' => 'changelog.php'],
+        ['key' => 'roadmap',       'label' => 'ДОРОЖНАЯ КАРТА', 'url' => 'roadmap.php'],
+    ],
+    'uk' => [
+        ['key' => 'index',         'label' => 'ГОЛОВНА',        'url' => 'index.php'],
+        ['key' => 'download',      'label' => 'ГРА',            'url' => 'download.php'],
+        ['key' => 'players',       'label' => 'СПІЛЬНОТА',      'url' => 'players.php'],
+        ['key' => 'subscriptions', 'label' => 'ПІДПИСКИ',       'url' => 'subscriptions.php'],
+        ['key' => 'changelog',     'label' => 'ОНОВЛЕННЯ',      'url' => 'changelog.php'],
+        ['key' => 'roadmap',       'label' => 'ДОРОЖНЯ КАРТА',  'url' => 'roadmap.php'],
+    ],
+    'en' => [
+        ['key' => 'index',         'label' => 'HOME',           'url' => 'index.php'],
+        ['key' => 'download',      'label' => 'GAME',           'url' => 'download.php'],
+        ['key' => 'players',       'label' => 'COMMUNITY',      'url' => 'players.php'],
+        ['key' => 'subscriptions', 'label' => 'SUBSCRIPTIONS',  'url' => 'subscriptions.php'],
+        ['key' => 'changelog',     'label' => 'UPDATES',        'url' => 'changelog.php'],
+        ['key' => 'roadmap',       'label' => 'ROADMAP',        'url' => 'roadmap.php'],
+    ],
+][$header_lang] ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo htmlspecialchars($header_lang, ENT_QUOTES, 'UTF-8'); ?>" data-theme="dark">
@@ -78,54 +113,63 @@ array_splice($header_ticker_items, 1, 0, [$header_ticker_state]);
         </div>
     </div>
 </div>
-<header class="app-header">
-    <a class="site-brand" href="<?php echo $header_url('index.php'); ?>" aria-label="Project Orion — главная">
-        <span class="site-brand-mark"><img src="images/logo.png" alt=""></span>
-        <span class="site-brand-copy">
-            <strong>PROJECT ORION</strong>
-            <small><?php echo $header_server_label; ?> <span class="header-server-status header-server-status--<?php echo $header_server_state['is_online'] ? 'online' : 'offline'; ?>"><i aria-hidden="true"></i><?php echo $header_server_state['is_online'] ? 'онлайн' : 'офлайн'; ?></span></small>
-        </span>
-    </a>
-    <button class="nav-toggle" type="button" data-nav-toggle aria-label="Открыть меню" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span></button>
-    <nav class="site-nav" id="siteNav" aria-label="Основная навигация">
-        <a href="<?php echo $header_url('index.php'); ?>" class="site-nav-link<?php echo nav_active('index', $active_page); ?>">Главная</a>
-        <a href="<?php echo $header_url('download.php'); ?>" class="site-nav-link<?php echo nav_active('download', $active_page); ?>">Играть</a>
-        <a href="<?php echo $header_url('players.php'); ?>" class="site-nav-link<?php echo nav_active('players', $active_page); ?>">Игроки</a>
-        <a href="<?php echo $header_url('subscriptions.php'); ?>" class="site-nav-link<?php echo nav_active('subscriptions', $active_page); ?>">Подписки</a>
-        <a href="<?php echo $header_url('petitions.php'); ?>" class="site-nav-link<?php echo nav_active('petitions', $active_page); ?>"><?php echo $header_lang === 'uk' ? 'Пропозиції' : ($header_lang === 'en' ? 'Proposals' : 'Предложения'); ?></a>
-        <a href="<?php echo $header_url('changelog.php'); ?>" class="site-nav-link<?php echo nav_active('changelog', $active_page); ?>">Обновления</a>
-        <a href="<?php echo $header_url('roadmap.php'); ?>" class="site-nav-link<?php echo nav_active('roadmap', $active_page); ?>">Роадмап</a>
-        <a href="<?php echo $header_url('bugs.php'); ?>" class="site-nav-link<?php echo nav_active('bugs', $active_page); ?>">Баг-репорты</a>
-        <a href="<?php echo $header_url('donate.php'); ?>" class="site-nav-link<?php echo nav_active('donate', $active_page); ?>">Поддержать</a>
-        <?php if (function_exists('session_is_staff') && session_is_staff()): ?><a href="<?php echo $header_url('admin.php'); ?>" class="site-nav-link<?php echo nav_active('admin', $active_page); ?>">Управление</a><?php endif; ?>
-        <div class="mobile-account-links">
+
+<!-- Верхняя полоса портала (2012 WoT style) -->
+<div class="b-portalmenu">
+    <div class="b-portalmenu-inner">
+        <div class="b-portalmenu-links">
+            <ul>
+                <li class="active"><span><?php echo htmlspecialchars($portal_labels['portal'], ENT_QUOTES, 'UTF-8'); ?></span></li>
+                <li><a href="https://discord.gg/fM4Dqess6r" target="_blank" rel="noopener noreferrer"><?php echo htmlspecialchars($portal_labels['discord'], ENT_QUOTES, 'UTF-8'); ?></a></li>
+                <li><a href="<?php echo $header_url('bugs.php'); ?>"><?php echo htmlspecialchars($portal_labels['bugs'], ENT_QUOTES, 'UTF-8'); ?></a></li>
+                <li><a href="<?php echo $header_url('donate.php'); ?>"><?php echo htmlspecialchars($portal_labels['support'], ENT_QUOTES, 'UTF-8'); ?></a></li>
+            </ul>
+        </div>
+        <div class="b-portalmenu-right">
+            <?php if (!in_array('is-admin', $body_classes, true) && function_exists('i18n_switcher_html')): ?>
+                <?php echo i18n_switcher_html('header'); ?>
+            <?php endif; ?>
             <?php if (isset($_SESSION['user_id'])): ?>
-                <a class="mobile-account-link mobile-account-profile<?php echo nav_active('profile', $active_page); ?>" href="<?php echo $header_url('profile.php'); ?>">Личный кабинет</a>
-                <a class="mobile-account-link mobile-account-logout" href="<?php echo $header_url('logout.php'); ?>">Выйти</a>
+                <a class="b-portalmenu-profile" href="<?php echo $header_url('profile.php'); ?>"><?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?></a>
+                <span class="b-portalmenu-sep">|</span>
+                <a href="<?php echo $header_url('profile.php'); ?>"><?php echo htmlspecialchars($portal_labels['profile'], ENT_QUOTES, 'UTF-8'); ?></a>
+                <span class="b-portalmenu-sep">|</span>
+                <?php if (function_exists('session_is_staff') && session_is_staff()): ?>
+                    <a href="<?php echo $header_url('admin.php'); ?>"><?php echo htmlspecialchars($portal_labels['admin'], ENT_QUOTES, 'UTF-8'); ?></a>
+                    <span class="b-portalmenu-sep">|</span>
+                <?php endif; ?>
+                <a href="<?php echo $header_url('logout.php'); ?>"><?php echo htmlspecialchars($portal_labels['logout'], ENT_QUOTES, 'UTF-8'); ?></a>
             <?php else: ?>
-                <a class="mobile-account-link mobile-account-login" href="<?php echo $header_url('login.php'); ?>">Войти</a>
-                <a class="mobile-account-link mobile-account-register<?php echo nav_active('register', $active_page); ?>" href="<?php echo $header_url('register.php'); ?>">Регистрация</a>
+                <a href="<?php echo $header_url('login.php'); ?>"><?php echo htmlspecialchars($portal_labels['login'], ENT_QUOTES, 'UTF-8'); ?></a>
+                <span class="b-portalmenu-sep">/</span>
+                <a href="<?php echo $header_url('register.php'); ?>"><?php echo htmlspecialchars($portal_labels['register'], ENT_QUOTES, 'UTF-8'); ?></a>
             <?php endif; ?>
         </div>
-    </nav>
-    <div class="header-actions">
-        <?php if (isset($pdo) && function_exists('staff_notifications_html')): ?>
-            <?php echo staff_notifications_html($pdo, 8); ?>
-        <?php endif; ?>
-        <?php if (!in_array('is-admin', $body_classes, true) && function_exists('i18n_switcher_html')): ?>
-            <?php echo i18n_switcher_html('header'); ?>
-        <?php endif; ?>
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Включить светлую тему" aria-pressed="true" title="Включить светлую тему">
-            <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
-            <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.4A8.5 8.5 0 0 1 8.6 3.8 8.5 8.5 0 1 0 20.2 15.4Z"></path></svg>
-        </button>
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <a class="profile-chip<?php echo nav_active('profile', $active_page); ?>" href="<?php echo $header_url('profile.php'); ?>"><span><?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?></span><small>Личный кабинет</small></a>
-            <a class="header-login" href="<?php echo $header_url('logout.php'); ?>">Выйти</a>
-        <?php else: ?>
-            <a class="header-login" href="<?php echo $header_url('login.php'); ?>">Войти</a>
-            <a class="header-register<?php echo nav_active('register', $active_page); ?>" href="<?php echo $header_url('register.php'); ?>">Регистрация</a>
-        <?php endif; ?>
-        <a class="btn btn-primary header-cta" href="<?php echo $header_url('download.php'); ?>">Играть</a>
     </div>
-</header>
+</div>
+
+<!-- Логотип по центру (2012 WoT style) -->
+<div class="b-header">
+    <a class="b-logo" href="<?php echo $header_url('index.php'); ?>" aria-label="Project Orion — главная">
+        <img src="images/logo.png" alt="Project Orion">
+    </a>
+</div>
+
+<!-- Главное меню (2012 WoT style) -->
+<div class="b-menu">
+    <button class="nav-toggle" type="button" data-nav-toggle aria-label="Открыть меню" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span></button>
+    <ul class="b-portal-menu" id="siteNav">
+        <?php foreach ($menu_items as $item): ?>
+            <li class="<?php echo nav_active($item['key'], $active_page); ?>">
+                <a href="<?php echo $header_url($item['url']); ?>"><?php echo htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8'); ?></a>
+            </li>
+        <?php endforeach; ?>
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <li class="b-menu-mobile-only"><a href="<?php echo $header_url('profile.php'); ?>"><?php echo htmlspecialchars($portal_labels['profile'], ENT_QUOTES, 'UTF-8'); ?></a></li>
+            <li class="b-menu-mobile-only"><a href="<?php echo $header_url('logout.php'); ?>"><?php echo htmlspecialchars($portal_labels['logout'], ENT_QUOTES, 'UTF-8'); ?></a></li>
+        <?php else: ?>
+            <li class="b-menu-mobile-only"><a href="<?php echo $header_url('login.php'); ?>"><?php echo htmlspecialchars($portal_labels['login'], ENT_QUOTES, 'UTF-8'); ?></a></li>
+            <li class="b-menu-mobile-only"><a href="<?php echo $header_url('register.php'); ?>"><?php echo htmlspecialchars($portal_labels['register'], ENT_QUOTES, 'UTF-8'); ?></a></li>
+        <?php endif; ?>
+    </ul>
+</div>

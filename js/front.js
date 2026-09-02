@@ -26,20 +26,16 @@
         }
     });
 
-    /* Шапка проявляется только после прокрутки — над героем она прозрачная.
-       Заодно отдаём её высоту в --header-height: на неё опирается отрицательный
-       отступ героя, а высота зависит от длины навигации и шрифта. */
-    var header = document.querySelector('.app-header');
-    if (header) {
-        var syncHeader = function () {
-            header.classList.toggle('is-scrolled', window.scrollY > 10);
-        };
+    /* Высота шапки (портал + логотип + меню) передаётся в --header-height:
+       на неё опирается отрицательный отступ героя. */
+    var headerParts = document.querySelectorAll('.b-portalmenu, .b-header, .b-menu');
+    if (headerParts.length) {
         var syncHeaderHeight = function () {
-            document.documentElement.style.setProperty('--header-height', header.offsetHeight + 'px');
+            var total = 0;
+            each(headerParts, function (el) { total += el.offsetHeight; });
+            document.documentElement.style.setProperty('--header-height', total + 'px');
         };
-        syncHeader();
         syncHeaderHeight();
-        window.addEventListener('scroll', syncHeader, { passive: true });
         window.addEventListener('resize', syncHeaderHeight);
         window.addEventListener('load', syncHeaderHeight);
     }

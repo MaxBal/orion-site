@@ -372,7 +372,7 @@
             return;
         }
 
-        var navLink = e.target.closest('.site-nav-link, .mobile-account-link');
+        var navLink = e.target.closest('.b-portal-menu a, .mobile-account-link');
         if (navLink) setNav(false);
     });
 

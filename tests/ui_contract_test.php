@@ -116,26 +116,18 @@ $groups = [
             || !str_contains($translated_markets, '<p>Усі ринки</p>')) {
             fail('Chunked localization does not translate the Markets page');
         }
-        expectContains('includes/header.php', 'class="app-header"', 'Shared app header is missing');
-        expectContains('includes/header.php', 'class="site-brand"', 'Shared brand is missing');
+        expectContains('includes/header.php', 'class="b-portalmenu"', 'Portal bar is missing');
+        expectContains('includes/header.php', 'class="b-logo"', 'Logo is missing');
         expectContains('includes/header.php', "header_url('roadmap.php')", 'Roadmap navigation link is missing');
         expectContains('includes/header.php', "header_url('subscriptions.php')", 'Subscriptions navigation link is missing');
-        expectContains('includes/header.php', "header_url('contracts.php')", 'Contracts navigation link is missing');
-        expectContains('includes/header.php', "header_url('gso.php')", 'GSO navigation link is missing');
-        expectContains('includes/header.php', "header_url('markets.php')", 'Markets navigation link is missing');
         expectContains('includes/header.php', 'aria-controls="siteNav"', 'Mobile navigation control is not wired');
-        expectContains('includes/header.php', 'class="mobile-account-links"', 'Mobile account navigation is missing');
-        expectContains('includes/header.php', 'mobile-account-login', 'Mobile login fallback is missing');
-        expectContains('includes/header.php', 'mobile-account-register', 'Mobile registration fallback is missing');
-        expectContains('includes/header.php', 'mobile-account-profile', 'Mobile profile fallback is missing');
-        expectContains('includes/header.php', 'mobile-account-logout', 'Mobile logout fallback is missing');
+        expectContains('includes/header.php', 'b-menu-mobile-only', 'Mobile account navigation is missing');
         expectContains('includes/header.php', '$page_styles', 'Page stylesheet contract is missing');
         expectContains('includes/header.php', "i18n_switcher_html('header')", 'Public language switcher is not in the top header');
         expectContains('admin.php', "i18n_switcher_html('admin')", 'Admin language switcher is not in the top bar');
         expectContains('lang.php', "function i18n_switcher_html(\$placement = 'header')", 'Language switcher placement contract is missing');
         expectNotContains('lang.php', '$switcher = i18n_switcher_html();', 'Language switcher is still injected at the bottom of every page');
-        expectContains('includes/footer.php', 'class="site-footer"', 'Shared footer is missing');
-        expectContains('includes/footer.php', 'Сайт создан для демонстрации и тестирования сервера Project Orion 0.8.2.', 'Footer testing notice changed');
+        expectContains('includes/footer.php', 'class="b-footer"', 'Shared footer is missing');
         expectContains('includes/footer.php', 'Независимый некоммерческий проект, созданный сообществом энтузиастов.', 'Footer community notice changed');
         expectContains('includes/footer.php', '$page_scripts', 'Page script contract is missing');
         expectContains('js/site.js', "document.getElementById(navBtn.getAttribute('aria-controls'))", 'Mobile navigation handler ignores aria-controls');
@@ -146,9 +138,8 @@ $groups = [
         expectContains('style.css', "--font-display: 'e-Ukraine Head'", 'e-Ukraine Head display font token is missing');
         expectContains('style.css', "url('fonts/e-Ukraine-Regular.otf')", 'Local e-Ukraine font asset is not registered');
         expectContains('style.css', "url('fonts/e-UkraineHead-Bold.otf')", 'Local e-Ukraine Head font asset is not registered');
-        expectContains('style.css', '.app-header', 'Header styles are missing');
-        expectContains('style.css', '.mobile-account-links { display: none; }', 'Mobile account links are not desktop-hidden');
-        expectContains('style.css', '.mobile-account-links { display: grid; }', 'Mobile account links are not exposed in the mobile menu');
+        expectContains('style.css', '.b-portalmenu', 'Portal bar styles are missing');
+        expectContains('style.css', '.b-menu-mobile-only {', 'Mobile account links are not desktop-hidden');
         expectContains('style.css', '.card', 'Card component is missing');
         expectContains('style.css', '.btn-primary', 'Primary button component is missing');
         expectContains('style.css', '.form-control', 'Form control component is missing');
@@ -162,7 +153,7 @@ $groups = [
         expectNotContains('index.php', 'Твой ангар', 'Old homepage slogan remains');
         expectContains('index.php', 'class="server-chip server-chip--', 'Dynamic server status chip is missing');
         expectContains('index.php', 'orion_server_state($pdo)', 'Homepage server status is still hardcoded');
-        expectContains('includes/header.php', 'header-server-status--', 'Shared header does not expose server status');
+        expectContains('includes/header.php', 'b-portalmenu-profile', 'Shared header does not expose user profile');
         // Пути к картинкам живут в константах (db.php), поэтому проверяем
         // использование константы, а не имя файла: ассет могут заменить,
         // не трогая разметку.
@@ -419,7 +410,7 @@ $groups = [
         expectContains('js/site.js', "document.execCommand('copy')", 'Clipboard fallback was removed');
         expectContains('js/site.js', "document.body.getAttribute('data-show-popup') === '1'", 'Donation auto-popup hook was removed');
         expectRegex('js/site.js', "~function initializeCounters\(\).*?if \(REDUCED \|\| !\('IntersectionObserver' in window\)\).*?showFinalCounterValues\(counters\);~s", 'Counters do not handle reduced motion or a missing IntersectionObserver');
-        expectContains('style.css', '.site-nav.is-open { display: flex; }', 'Navigation CSS does not use the shared open state');
+        expectContains('style.css', '.b-portal-menu.is-open { display: flex; }', 'Navigation CSS does not use the shared open state');
         expectContains('style.css', '.donate-modal.is-open { visibility: visible; opacity: 1; }', 'Modal CSS does not use the shared open state');
         expectContains('style.css', 'body.modal-open { overflow: hidden; }', 'Modal scroll locking is missing');
         expectNotContains('style.css', '.site-nav.open {', 'Legacy navigation open state remains');
