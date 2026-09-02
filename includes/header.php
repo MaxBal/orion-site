@@ -136,13 +136,6 @@ $menu_items = [
     </div>
 </div>
 
-<!-- Логотип (2012 WoT style) -->
-<div class="b-header">
-    <a class="b-logo" href="<?php echo $header_url('index.php'); ?>" aria-label="Project Orion — главная">
-        <span class="b-logo-text">PROJECT ORION</span>
-    </a>
-</div>
-
 <!-- Главное меню (2012 WoT style) -->
 <div class="b-menu">
     <button class="nav-toggle" type="button" data-nav-toggle aria-label="Открыть меню" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span></button>
