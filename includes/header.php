@@ -104,15 +104,6 @@ $menu_items = [
     <?php echo $head_extra; ?>
 </head>
 <body class="<?php echo htmlspecialchars(implode(' ', $body_classes), ENT_QUOTES, 'UTF-8'); ?>"<?php echo $show_popup ? ' data-show-popup="1"' : ''; ?>>
-<div class="front-ticker" aria-hidden="true">
-    <div class="front-ticker-track" data-front-marquee>
-        <div class="front-ticker-group">
-            <?php foreach ($header_ticker_items as $ticker_item): ?>
-                <span><?php echo htmlspecialchars($ticker_item, ENT_QUOTES, 'UTF-8'); ?></span><span class="front-ticker-dot">◆</span>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</div>
 
 <!-- Верхняя полоса портала (2012 WoT style) -->
 <div class="b-portalmenu">
@@ -126,9 +117,6 @@ $menu_items = [
             </ul>
         </div>
         <div class="b-portalmenu-right">
-            <?php if (!in_array('is-admin', $body_classes, true) && function_exists('i18n_switcher_html')): ?>
-                <?php echo i18n_switcher_html('header'); ?>
-            <?php endif; ?>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <a class="b-portalmenu-profile" href="<?php echo $header_url('profile.php'); ?>"><?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?></a>
                 <span class="b-portalmenu-sep">|</span>
@@ -148,7 +136,7 @@ $menu_items = [
     </div>
 </div>
 
-<!-- Логотип по центру (2012 WoT style) -->
+<!-- Логотип (2012 WoT style) -->
 <div class="b-header">
     <a class="b-logo" href="<?php echo $header_url('index.php'); ?>" aria-label="Project Orion — главная">
         <img src="images/logo.png" alt="Project Orion">
@@ -160,16 +148,16 @@ $menu_items = [
     <button class="nav-toggle" type="button" data-nav-toggle aria-label="Открыть меню" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span></button>
     <ul class="b-portal-menu" id="siteNav">
         <?php foreach ($menu_items as $item): ?>
-            <li class="<?php echo nav_active($item['key'], $active_page); ?>">
-                <a href="<?php echo $header_url($item['url']); ?>"><?php echo htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8'); ?></a>
+            <li class="b-portal-menu_point<?php echo nav_active($item['key'], $active_page); ?>">
+                <a class="b-portal-menu_point_linck" href="<?php echo $header_url($item['url']); ?>"><span class="b-portal-menu_point_linck_txt"><?php echo htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8'); ?></span></a>
             </li>
         <?php endforeach; ?>
         <?php if (isset($_SESSION['user_id'])): ?>
-            <li class="b-menu-mobile-only"><a href="<?php echo $header_url('profile.php'); ?>"><?php echo htmlspecialchars($portal_labels['profile'], ENT_QUOTES, 'UTF-8'); ?></a></li>
-            <li class="b-menu-mobile-only"><a href="<?php echo $header_url('logout.php'); ?>"><?php echo htmlspecialchars($portal_labels['logout'], ENT_QUOTES, 'UTF-8'); ?></a></li>
+            <li class="b-portal-menu_point b-menu-mobile-only"><a class="b-portal-menu_point_linck" href="<?php echo $header_url('profile.php'); ?>"><span class="b-portal-menu_point_linck_txt"><?php echo htmlspecialchars($portal_labels['profile'], ENT_QUOTES, 'UTF-8'); ?></span></a></li>
+            <li class="b-portal-menu_point b-menu-mobile-only"><a class="b-portal-menu_point_linck" href="<?php echo $header_url('logout.php'); ?>"><span class="b-portal-menu_point_linck_txt"><?php echo htmlspecialchars($portal_labels['logout'], ENT_QUOTES, 'UTF-8'); ?></span></a></li>
         <?php else: ?>
-            <li class="b-menu-mobile-only"><a href="<?php echo $header_url('login.php'); ?>"><?php echo htmlspecialchars($portal_labels['login'], ENT_QUOTES, 'UTF-8'); ?></a></li>
-            <li class="b-menu-mobile-only"><a href="<?php echo $header_url('register.php'); ?>"><?php echo htmlspecialchars($portal_labels['register'], ENT_QUOTES, 'UTF-8'); ?></a></li>
+            <li class="b-portal-menu_point b-menu-mobile-only"><a class="b-portal-menu_point_linck" href="<?php echo $header_url('login.php'); ?>"><span class="b-portal-menu_point_linck_txt"><?php echo htmlspecialchars($portal_labels['login'], ENT_QUOTES, 'UTF-8'); ?></span></a></li>
+            <li class="b-portal-menu_point b-menu-mobile-only"><a class="b-portal-menu_point_linck" href="<?php echo $header_url('register.php'); ?>"><span class="b-portal-menu_point_linck_txt"><?php echo htmlspecialchars($portal_labels['register'], ENT_QUOTES, 'UTF-8'); ?></span></a></li>
         <?php endif; ?>
     </ul>
 </div>
