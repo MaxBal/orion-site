@@ -92,10 +92,7 @@ array_splice($header_ticker_items, 1, 0, [$header_ticker_state]);
         <a href="<?php echo $header_url('download.php'); ?>" class="site-nav-link<?php echo nav_active('download', $active_page); ?>">Играть</a>
         <a href="<?php echo $header_url('players.php'); ?>" class="site-nav-link<?php echo nav_active('players', $active_page); ?>">Игроки</a>
         <a href="<?php echo $header_url('subscriptions.php'); ?>" class="site-nav-link<?php echo nav_active('subscriptions', $active_page); ?>">Подписки</a>
-        <a href="<?php echo $header_url('contracts.php'); ?>" class="site-nav-link<?php echo nav_active('contracts', $active_page); ?>">Контракты</a>
-        <a href="<?php echo $header_url('gso.php'); ?>" class="site-nav-link<?php echo nav_active('gso', $active_page); ?>">ГСО</a>
         <a href="<?php echo $header_url('petitions.php'); ?>" class="site-nav-link<?php echo nav_active('petitions', $active_page); ?>"><?php echo $header_lang === 'uk' ? 'Пропозиції' : ($header_lang === 'en' ? 'Proposals' : 'Предложения'); ?></a>
-        <a href="<?php echo $header_url('markets.php'); ?>" class="site-nav-link<?php echo nav_active('markets', $active_page); ?>">Рынки</a>
         <a href="<?php echo $header_url('changelog.php'); ?>" class="site-nav-link<?php echo nav_active('changelog', $active_page); ?>">Обновления</a>
         <a href="<?php echo $header_url('roadmap.php'); ?>" class="site-nav-link<?php echo nav_active('roadmap', $active_page); ?>">Роадмап</a>
         <a href="<?php echo $header_url('bugs.php'); ?>" class="site-nav-link<?php echo nav_active('bugs', $active_page); ?>">Баг-репорты</a>
