@@ -913,9 +913,10 @@ try {
     if (str_contains($db_host, 'neon.tech')) {
         $dsn .= ';sslmode=require';
         // Neon требует endpoint ID для SNI. Извлекаем из имени хоста
-        // (первая часть до первого дефиса после 'ep-')
-        if (preg_match('/^(ep-[a-z0-9]+)-/', $db_host, $m)) {
-            $dsn .= ';options=endpoint%3D' . $m[1];
+        // Формат: ep-<name>-pooler.<region>.aws.neon.tech
+        $parts = explode('.', $db_host);
+        if (str_starts_with($parts[0], 'ep-')) {
+            $dsn .= ';options=endpoint%3D' . $parts[0];
         }
     } elseif (str_contains($db_host, 'amazonaws.com')) {
         $dsn .= ';sslmode=require';
