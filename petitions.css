@@ -1,0 +1,340 @@
+.petitions-page {
+    padding-top: 46px;
+}
+
+.petition-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    gap: 36px;
+    align-items: end;
+    margin-bottom: 32px;
+}
+
+.petition-hero .page-header {
+    margin-bottom: 0;
+}
+
+.petition-threshold {
+    display: grid;
+    min-height: 174px;
+    padding: 25px;
+    align-content: center;
+    background: var(--color-accent-soft);
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.petition-threshold strong {
+    color: var(--color-accent);
+    font: 700 clamp(52px, 7vw, 82px)/.9 var(--font-display);
+    letter-spacing: -.08em;
+}
+
+.petition-threshold span {
+    margin-top: 14px;
+    color: var(--color-text);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.petition-flow {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin-bottom: 28px;
+    overflow: hidden;
+    background: var(--color-line);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+}
+
+.petition-flow-step {
+    display: flex;
+    gap: 14px;
+    min-height: 102px;
+    padding: 20px;
+    background: var(--color-surface);
+}
+
+.petition-flow-step > span {
+    color: var(--color-accent);
+    font: 700 13px/1 var(--font-mono);
+}
+
+.petition-flow-step strong {
+    display: block;
+    color: var(--color-ink);
+}
+
+.petition-flow-step p {
+    margin: 6px 0 0;
+    color: var(--color-muted);
+    font-size: 13px;
+}
+
+.petition-alert {
+    margin-bottom: 24px;
+}
+
+.petitions-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, .72fr) minmax(0, 1.28fr);
+    gap: 28px;
+    align-items: start;
+}
+
+.petition-submit-card {
+    position: sticky;
+    top: 92px;
+}
+
+.petition-submit-card .card-header p:last-child,
+.petition-board-heading p:last-child {
+    margin-bottom: 0;
+    color: var(--color-muted);
+    font-size: 14px;
+}
+
+.petition-submit-form .form-group {
+    margin-bottom: 16px;
+}
+
+.petition-submit-form textarea {
+    min-height: 96px;
+    resize: vertical;
+}
+
+.petition-submit-card .recaptcha-field {
+    min-height: 78px;
+    overflow: visible;
+}
+
+.petition-submit-card .g-recaptcha {
+    width: 304px;
+    max-width: none;
+    transform-origin: top left;
+}
+
+.petition-board-heading {
+    align-items: end;
+    margin-bottom: 18px;
+}
+
+.petition-board-heading h2 {
+    margin-bottom: 8px;
+}
+
+.petition-board-count {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 auto;
+    place-items: center;
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+    border: 1px solid var(--color-line-strong);
+    border-radius: 50%;
+    font: 700 15px/1 var(--font-mono);
+}
+
+.petition-list {
+    display: grid;
+    gap: 16px;
+}
+
+.petition-card {
+    overflow: hidden;
+}
+
+.petition-card-header,
+.petition-card-footer {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.petition-card-header {
+    padding: 20px 22px;
+    border-bottom: 1px solid var(--color-line);
+}
+
+.petition-card-header h3 {
+    margin: 7px 0 0;
+    font-size: clamp(19px, 2.4vw, 25px);
+}
+
+.petition-id {
+    color: var(--color-accent);
+    font: 700 11px/1 var(--font-mono);
+    letter-spacing: .07em;
+}
+
+.petition-status {
+    display: inline-flex;
+    min-height: 28px;
+    padding: 5px 9px;
+    align-items: center;
+    flex: 0 0 auto;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 0;
+    color: var(--color-text);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.petition-status--collecting { color: var(--color-accent); border-color: var(--color-accent); }
+.petition-status--voting,
+.petition-status--council_review { color: var(--color-info); border-color: var(--color-info); }
+.petition-status--implementation,
+.petition-status--implemented { color: var(--color-success); border-color: var(--color-success); }
+.petition-status--rejected { color: var(--color-danger); border-color: var(--color-danger); }
+
+.petition-card-body {
+    padding: 18px 22px 20px;
+}
+
+.petition-meta {
+    display: flex;
+    gap: 14px 22px;
+    flex-wrap: wrap;
+    color: var(--color-muted);
+    font-size: 12px;
+}
+
+.petition-meta strong {
+    color: var(--color-text);
+}
+
+.petition-description {
+    margin: 18px 0 14px;
+    color: var(--color-text);
+    white-space: normal;
+}
+
+.petition-expected {
+    padding: 13px 15px;
+    background: var(--color-surface-soft);
+    border-left: 2px solid var(--color-accent);
+}
+
+.petition-expected strong {
+    color: var(--color-ink);
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.petition-expected p {
+    margin: 5px 0 0;
+    font-size: 13px;
+}
+
+.petition-progress-heading {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    margin-top: 18px;
+    color: var(--color-muted);
+    font-size: 12px;
+}
+
+.petition-progress-heading strong {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+}
+
+.petition-progress {
+    height: 8px;
+    margin-top: 8px;
+    overflow: hidden;
+    background: var(--color-line-strong);
+    border-radius: 0;
+}
+
+.petition-progress span {
+    display: block;
+    height: 100%;
+    min-width: 2px;
+    background: var(--color-accent);
+    border-radius: inherit;
+}
+
+.petition-card-footer {
+    min-height: 64px;
+    padding: 13px 22px;
+    align-items: center;
+    background: var(--color-surface-soft);
+    border-top: 1px solid var(--color-line);
+}
+
+.petition-signed {
+    color: var(--color-success);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.petition-empty {
+    padding: 26px 22px;
+    color: var(--color-muted);
+}
+
+@media (max-width: 900px) {
+    .petition-hero,
+    .petitions-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .petition-submit-card {
+        position: static;
+    }
+}
+
+@media (max-width: 640px) {
+    .petition-flow {
+        grid-template-columns: 1fr;
+    }
+
+    .petition-hero {
+        gap: 22px;
+    }
+
+    .petition-threshold {
+        min-height: 126px;
+    }
+
+    .petition-threshold strong {
+        font-size: 58px;
+    }
+
+    .petition-card-header,
+    .petition-card-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .petition-status {
+        align-self: flex-start;
+    }
+
+    .petition-card-footer .btn,
+    .petition-card-footer .inline-form {
+        width: 100%;
+    }
+
+    .petition-card-footer .btn {
+        min-height: 42px;
+    }
+}
+
+@media (max-width: 380px) {
+    .petition-submit-card .recaptcha-field {
+        height: 63px;
+    }
+
+    .petition-submit-card .g-recaptcha {
+        transform: scale(.8);
+    }
+}

@@ -1,0 +1,199 @@
+/* Нативный слой анимаций Project Orion.
+   Загружается после style.css и отвечает за motion-enhancement интерфейса. */
+
+:root {
+    --motion-ease-out: cubic-bezier(.16, 1, .3, 1);
+    --motion-ease-spring: cubic-bezier(.22, 1.15, .36, 1);
+    --scroll-progress: 0;
+}
+
+body::before {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent), #f2c26e 65%, var(--color-info));
+    content: '';
+    pointer-events: none;
+    transform: scaleX(var(--scroll-progress));
+    transform-origin: left center;
+}
+
+.home-hero { position: relative; }
+
+.hero-particles {
+    display: none;
+    position: absolute;
+    inset: -12% -8%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.hero-particles::before,
+.hero-particles::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+}
+
+.hero-particles::before {
+    background:
+        radial-gradient(circle at 68% 30%, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent 18%),
+        radial-gradient(circle at 82% 66%, color-mix(in srgb, var(--color-info) 12%, transparent), transparent 22%);
+    filter: blur(18px);
+    animation: ambient-drift 14s var(--motion-ease-out) infinite alternate;
+}
+
+.hero-particles::after {
+    display: none;
+    background-image: linear-gradient(color-mix(in srgb, var(--color-accent) 12%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--color-accent) 12%, transparent) 1px, transparent 1px);
+    background-size: 54px 54px;
+    mask-image: radial-gradient(ellipse at 70% 45%, #000, transparent 68%);
+    opacity: .34;
+    animation: ambient-grid 9s ease-in-out infinite alternate;
+}
+
+.home-hero-copy,
+.home-hero-media { position: relative; z-index: 1; }
+
+.home-hero-media--logo img {
+    transform: translate3d(var(--hero-shift-x, 0px), var(--hero-shift-y, 0px), 0) rotateX(var(--hero-rotate-x, 0deg)) rotateY(var(--hero-rotate-y, 0deg));
+    transition: transform 900ms var(--motion-ease-spring);
+    will-change: transform;
+}
+
+/* При отключённом JavaScript серверный контент остаётся видимым. */
+.reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+}
+
+/* Существующие data-атрибуты остаются хуками, а reveal теперь управляется локально. */
+html.motion-ready [data-aos],
+html.motion-ready .reveal {
+    --motion-delay: calc(var(--reveal-i, 0) * 55ms);
+    opacity: 0;
+    transform: translate3d(0, 28px, 0) scale(.985);
+    transition: opacity 700ms var(--motion-ease-out), transform 900ms var(--motion-ease-spring);
+    transition-delay: var(--motion-delay);
+    will-change: opacity, transform;
+}
+
+html.motion-ready [data-aos="zoom-in"] { transform: translate3d(0, 0, 0) scale(.92); }
+html.motion-ready [data-aos="fade-left"] { transform: translate3d(32px, 0, 0) scale(.985); }
+html.motion-ready [data-aos="fade-right"] { transform: translate3d(-32px, 0, 0) scale(.985); }
+html.motion-ready [data-aos][data-aos-delay] { --motion-delay: 0ms; }
+html.motion-ready [data-aos].motion-visible,
+html.motion-ready .reveal.visible { opacity: 1; transform: none; }
+
+.motion-ripple {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: .22;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0);
+    animation: motion-ripple 650ms var(--motion-ease-out) forwards;
+}
+
+.btn,
+.theme-toggle,
+.nav-toggle { position: relative; isolation: isolate; overflow: hidden; }
+
+@media (max-width: 1300px) {
+    .site-nav {
+        display: flex;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-12px) scale(.98);
+        transition: opacity 260ms ease, transform 420ms var(--motion-ease-spring), visibility 0s linear 420ms;
+    }
+
+    .site-nav.is-open {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+        transform: none;
+        transition-delay: 0s;
+    }
+}
+
+.donate-modal {
+    transition: opacity 420ms ease, visibility 0s linear 420ms;
+}
+
+.modal-dialog {
+    opacity: 0;
+    transform: translateY(24px) scale(.96);
+    transition: opacity 420ms var(--motion-ease-out), transform 620ms var(--motion-ease-spring);
+}
+
+.donate-modal.is-open { transition-delay: 0s; }
+.donate-modal.is-open .modal-dialog { opacity: 1; transform: none; transition-delay: 45ms; }
+
+.home-subscriptions-orbit { animation: home-orbit-breathe 12s ease-in-out infinite alternate; }
+.subscriptions-orbit,
+.roadmap-hero-orbit { animation: orbit-breathe 12s ease-in-out infinite alternate; }
+
+.home-subscriptions-orbit::before,
+.subscriptions-orbit::before { animation: orbit-spin 28s linear infinite; }
+
+@keyframes ambient-drift {
+    from { transform: translate3d(-3%, -2%, 0) scale(.96); }
+    to { transform: translate3d(4%, 3%, 0) scale(1.08); }
+}
+
+@keyframes ambient-grid {
+    from { opacity: .18; transform: translate3d(0, -10px, 0); }
+    to { opacity: .42; transform: translate3d(22px, 16px, 0); }
+}
+
+@keyframes orbit-breathe {
+    from { opacity: .68; transform: scale(.97) rotate(-2deg); }
+    to { opacity: 1; transform: scale(1.03) rotate(2deg); }
+}
+
+@keyframes home-orbit-breathe {
+    from { opacity: .68; transform: translate(-50%, -50%) scale(.97) rotate(-2deg); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1.03) rotate(2deg); }
+}
+
+@keyframes orbit-spin { to { transform: rotate(360deg); } }
+
+@keyframes motion-ripple {
+    to { opacity: 0; transform: translate(-50%, -50%) scale(18); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body::before { display: none; }
+
+    html.motion-ready [data-aos],
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .hero-particles,
+    .motion-ripple { display: none; }
+
+    .home-hero-media--logo img { transform: none; transition: none; }
+
+    .site-nav,
+    .site-nav.is-open,
+    .donate-modal,
+    .modal-dialog { transition: none; transform: none; }
+
+    .home-subscriptions-orbit,
+    .subscriptions-orbit,
+    .roadmap-hero-orbit,
+    .home-subscriptions-orbit::before,
+    .subscriptions-orbit::before { animation: none; }
+}

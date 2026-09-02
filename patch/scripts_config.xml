@@ -1,0 +1,37 @@
+<root>
+	<login>
+		<host>
+			<name>	W.o.T.	</name>
+			<url>	YOUR_SERVER_IP:20016	</url>
+			<public_key_path>	loginapp_wot.pubkey	</public_key_path>
+		</host>
+	</login>
+	<updateUrl>	http://YOUR_SERVER_IP/update	</updateUrl>
+	<fakeModel>	objects/fake_model.model	</fakeModel>
+	<silhouetteColors>
+		<self>	0.2 0.2 0.2 0.5	</self>
+		<enemy>	1.0 0.0 0.0 0.5	</enemy>
+		<friend>	0.0 1.0 0.0 0.5	</friend>
+	</silhouetteColors>
+	<decal>
+		<groups>
+			<slow>
+				<lifeTime>	100	</lifeTime>
+				<trianglesCount>	10000	</trianglesCount>
+			</slow>
+			<medium>
+				<lifeTime>	50	</lifeTime>
+				<trianglesCount>	5000	</trianglesCount>
+			</medium>
+			<fast>
+				<lifeTime>	25	</lifeTime>
+				<trianglesCount>	2500	</trianglesCount>
+			</fast>
+		</groups>
+		<textures>
+			<explosion>
+				<texture>	maps/fx/explosion_decal.dds	</texture>
+			</explosion>
+		</textures>
+	</decal>
+</root>

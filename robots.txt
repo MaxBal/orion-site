@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin.php
+Disallow: /profile.php
+Disallow: /logout.php
+Disallow: /verify.php
+Disallow: /reset_password.php
+Disallow: /bug_view.php
+Disallow: /uploads/
+
+Sitemap: https://projectorion.fun/sitemap.xml

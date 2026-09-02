@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "orion-site",
+      "runtimeExecutable": "C:\\laragon\\bin\\php\\php-8.3.33-Win32-vs16-x64\\php.exe",
+      "runtimeArgs": ["-S", "localhost:8123", "-t", ".", ".claude/preview-router.php"],
+      "port": 8123
+    }
+  ]
+}

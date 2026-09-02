@@ -1,0 +1,21 @@
+{
+  "builds": [
+    {
+      "src": "**/*.php",
+      "use": "@vercel/php"
+    }
+  ],
+  "routes": [
+    { "src": "/css/(.*)", "dest": "/css/$1" },
+    { "src": "/js/(.*)", "dest": "/js/$1" },
+    { "src": "/images/(.*)", "dest": "/images/$1" },
+    { "src": "/fonts/(.*)", "dest": "/fonts/$1" },
+    { "src": "/uploads/(.*)", "dest": "/uploads/$1" },
+    { "src": "/favicon\\.png", "dest": "/favicon.png" },
+    { "src": "/robots\\.txt", "dest": "/robots.txt" },
+    { "src": "/sitemap\\.xml", "dest": "/sitemap.xml" },
+    { "src": "/(favicon\\.ico)", "dest": "/favicon.png" },
+    { "src": "/([^/]+)", "dest": "/$1.php" },
+    { "src": "/(.*)", "dest": "/index.php" }
+  ]
+}
