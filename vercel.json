@@ -1,11 +1,24 @@
 {
-  "functions": {
-    "api/index.php": {
-      "runtime": "vercel-php@0.9.0"
-    }
-  },
+  "builds": [
+    { "src": "api/index.php", "use": "vercel-php@0.9.0" },
+    { "src": "style.css", "use": "@vercel/static" },
+    { "src": "css/**", "use": "@vercel/static" },
+    { "src": "js/**", "use": "@vercel/static" },
+    { "src": "images/**", "use": "@vercel/static" },
+    { "src": "fonts/**", "use": "@vercel/static" },
+    { "src": "favicon.png", "use": "@vercel/static" },
+    { "src": "robots.txt", "use": "@vercel/static" },
+    { "src": "sitemap.xml", "use": "@vercel/static" }
+  ],
   "routes": [
-    { "handle": "filesystem" },
+    { "src": "/css/(.*)", "dest": "/css/$1" },
+    { "src": "/js/(.*)", "dest": "/js/$1" },
+    { "src": "/images/(.*)", "dest": "/images/$1" },
+    { "src": "/fonts/(.*)", "dest": "/fonts/$1" },
+    { "src": "/style\\.css", "dest": "/style.css" },
+    { "src": "/favicon\\.png", "dest": "/favicon.png" },
+    { "src": "/robots\\.txt", "dest": "/robots.txt" },
+    { "src": "/sitemap\\.xml", "dest": "/sitemap.xml" },
     { "src": "/(.*)", "dest": "/api/index.php" }
   ]
 }
