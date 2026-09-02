@@ -23,6 +23,7 @@ function h($value) {
 $donation_url = '';
 $btc_address = '';
 $ltc_address = '';
+$bmc_username = 'orion_reborn';
 $copy = [
     'ru' => [
         'page_title' => 'Поддержать сервер Project Orion 0.8.2',
@@ -108,6 +109,17 @@ require __DIR__ . '/includes/header.php';
     </p>
 
     <section class="donate-grid">
+        <?php if ($bmc_username !== ''): ?>
+        <article class="wallet-card">
+            <div>
+                <p class="eyebrow">Buy Me a Coffee</p>
+                <h2>Coffee</h2>
+                <p><?php echo h($copy['fast_transfer']); ?></p>
+                <a href="https://buymeacoffee.com/<?php echo h($bmc_username); ?>" target="_blank" rel="noopener" class="btn btn-primary">Buy Me a Coffee</a>
+            </div>
+        </article>
+        <?php endif; ?>
+
         <article class="wallet-card">
             <div>
                 <p class="eyebrow"><?php echo h($copy['wallets']); ?></p>
@@ -146,3 +158,7 @@ require __DIR__ . '/includes/header.php';
 </main>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
+
+<?php if ($bmc_username !== ''): ?>
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="<?php echo h($bmc_username); ?>" data-description="Support me on Buy me a coffee!" data-message="" data-color="#FF813F" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+<?php endif; ?>
