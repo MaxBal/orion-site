@@ -1,0 +1,29 @@
+{
+  "name": "orion-site",
+  "version": "1.0.0",
+  "description": "Project Orion website and administration panel.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxBal/orion-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MaxBal/orion-site/issues"
+  },
+  "homepage": "https://github.com/MaxBal/orion-site#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}
