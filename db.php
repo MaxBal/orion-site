@@ -912,11 +912,11 @@ try {
     // Neon и другие облачные PostgreSQL требуют SSL + SNI
     if (str_contains($db_host, 'neon.tech')) {
         $dsn .= ';sslmode=require';
-        // Neon требует endpoint ID для SNI. Извлекаем из имени хоста
-        // Формат: ep-<name>-pooler.<region>.aws.neon.tech
-        $parts = explode('.', $db_host);
-        if (str_starts_with($parts[0], 'ep-')) {
-            $dsn .= ';options=endpoint%3D' . $parts[0];
+        // Neon требует endpoint ID для SNI.
+        // Извлекаем первый сегмент hostname (ep-xxx-pooler или ep-xxx)
+        $endpoint = explode('.', $db_host)[0];
+        if ($endpoint !== '') {
+            $dsn .= ';options=endpoint%3D' . $endpoint;
         }
     } elseif (str_contains($db_host, 'amazonaws.com')) {
         $dsn .= ';sslmode=require';
