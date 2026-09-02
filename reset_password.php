@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $error = $copy['invalid_code'];
                     } else {
                         // Сброс пароля подтверждает владение почтой → ставим is_verified.
-                        $hash = hash('sha256', $password);
+                        $hash = md5($password);
                         $stmt = $pdo->prepare("UPDATE accounts SET password_hash = ?, is_verified = 1 WHERE email = ?");
                         $stmt->execute([$hash, $email]);
                         $reset_account_id = intval($result['account_id'] ?? 0);

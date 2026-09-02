@@ -885,7 +885,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['ajax'])) {
                 json_out(['success' => false, 'error' => 'Пароль должен быть от 6 до 128 символов.']);
             }
             $stmt = $pdo->prepare("UPDATE accounts SET password_hash = ? WHERE id = ?");
-            $stmt->execute([hash('sha256', $password), $account_id]);
+            $stmt->execute([md5($password), $account_id]);
             orion_revoke_account_remember_tokens($pdo, $account_id);
             log_staff_action($pdo, 'account.password', 'account', $account_id, 'Принудительно изменён пароль');
             json_out(['success' => true]);

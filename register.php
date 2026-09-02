@@ -204,7 +204,7 @@ if ($error === '' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($stmt->fetchColumn() > 0) {
                     $error = $copy['one_per_ip'];
                 } else {
-                $password_hash = hash('sha256', $password);
+                $password_hash = md5($password);
                 $now = date('Y-m-d H:i:s');
 
                 $pdo->beginTransaction();

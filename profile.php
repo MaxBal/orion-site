@@ -184,8 +184,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
             $stmt->execute([$user_id]);
             $current_hash = $stmt->fetchColumn();
 
-            if (hash('sha256', $current_password) === $current_hash) {
-                $new_hash = hash('sha256', $new_password);
+            if (md5($current_password) === $current_hash) {
+                $new_hash = md5($new_password);
                 $update_stmt = $pdo->prepare("UPDATE accounts SET password_hash = ? WHERE id = ?");
                 $update_stmt->execute([$new_hash, $user_id]);
                 orion_revoke_account_remember_tokens($pdo, $user_id);
