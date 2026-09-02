@@ -139,7 +139,7 @@ $menu_items = [
 <!-- Логотип (2012 WoT style) -->
 <div class="b-header">
     <a class="b-logo" href="<?php echo $header_url('index.php'); ?>" aria-label="Project Orion — главная">
-        <img src="images/logo.png" alt="Project Orion">
+        <span class="b-logo-text">PROJECT ORION</span>
     </a>
 </div>
 
