@@ -908,7 +908,12 @@ $db_user = $db_config['user'] ?? 'postgres';
 $db_pass = $db_config['password'] ?? '';
 
 try {
-    $pdo = new PDO("pgsql:host=$db_host;port=$db_port;dbname=$db_name", $db_user, $db_pass, [
+    $dsn = "pgsql:host=$db_host;port=$db_port;dbname=$db_name";
+    // Neon и другие облачные PostgreSQL требуют SSL
+    if (str_contains($db_host, 'neon.tech') || str_contains($db_host, 'amazonaws.com')) {
+        $dsn .= ';sslmode=require';
+    }
+    $pdo = new PDO($dsn, $db_user, $db_pass, [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
