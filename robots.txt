@@ -1,11 +1,4 @@
 User-agent: *
-Allow: /
-Disallow: /admin.php
-Disallow: /profile.php
-Disallow: /logout.php
-Disallow: /verify.php
-Disallow: /reset_password.php
-Disallow: /bug_view.php
-Disallow: /uploads/
+Disallow: /
 
-Sitemap: https://projectorion.fun/sitemap.xml
+# Test environment — not for indexing

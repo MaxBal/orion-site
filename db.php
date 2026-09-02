@@ -959,6 +959,11 @@ enforce_session_ban($pdo);
 // $index = false ставит noindex для служебных страниц.
 function seo_head($title, $description, $path = '', $index = true, $options = []) {
     $base = 'https://projectorion.fun/';
+    // Тестовый домен — всегда noindex
+    $host = strtolower((string)($_SERVER['HTTP_HOST'] ?? ''));
+    if (str_contains($host, 'test.projectorion.top') || str_contains($host, '.vercel.app')) {
+        $index = false;
+    }
     $lang = function_exists('current_lang') ? current_lang() : 'ru';
     $locale = function_exists('i18n_locale_meta') ? i18n_locale_meta($lang) : [
         'og_locale' => 'ru_RU',
