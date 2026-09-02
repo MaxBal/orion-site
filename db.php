@@ -909,6 +909,11 @@ $db_pass = $db_config['password'] ?? '';
 
 try {
     $dsn = "pgsql:host=$db_host;port=$db_port;dbname=$db_name";
+    $pdo_options = [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ];
     // Neon и другие облачные PostgreSQL требуют SSL + SNI
     if (str_contains($db_host, 'neon.tech')) {
         $dsn .= ';sslmode=require';
@@ -916,16 +921,13 @@ try {
         // Извлекаем первый сегмент hostname (ep-xxx-pooler или ep-xxx)
         $endpoint = explode('.', $db_host)[0];
         if ($endpoint !== '') {
-            $dsn .= ';options=endpoint%3D' . $endpoint;
+            // PGSQL_ATTR_CONNECT_OPTIONS передаёт libpq options напрямую
+            $pdo_options[100] = 'endpoint=' . $endpoint; // 100 = PDO::PGSQL_ATTR_CONNECT_OPTIONS
         }
     } elseif (str_contains($db_host, 'amazonaws.com')) {
         $dsn .= ';sslmode=require';
     }
-    $pdo = new PDO($dsn, $db_user, $db_pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES => false,
-    ]);
+    $pdo = new PDO($dsn, $db_user, $db_pass, $pdo_options);
     ensure_site_schema($pdo);
 } catch (PDOException $e) {
     error_log("DB connection error: " . $e->getMessage());
