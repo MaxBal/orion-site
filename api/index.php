@@ -83,4 +83,14 @@ if (isset($routes[$uri])) {
 $_SERVER['SCRIPT_NAME'] = '/' . basename($file);
 $_SERVER['SCRIPT_FILENAME'] = $file;
 
+// Edge caching для гостевых страниц (без сессии)
+$guest_pages = ['index', 'download', 'changelog', 'roadmap', 'legal', 'players', 'markets', 'subscriptions', 'donate'];
+$page_name = pathinfo(basename($file), PATHINFO_FILENAME);
+$is_guest = in_array($page_name, $guest_pages, true) && empty($_COOKIE['orion_remember']) && empty($_COOKIE[session_name()]);
+if ($is_guest) {
+    header('Cache-Control: public, s-maxage=60, stale-while-revalidate=300');
+    header('CDN-Cache-Control: public, max-age=60');
+    header('Vercel-CDN-Cache-Control: public, s-maxage=60');
+}
+
 require $file;
