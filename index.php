@@ -579,19 +579,6 @@ require __DIR__ . '/includes/header.php';
     </section>
     </div>
 
-    <div class="front-strip" aria-hidden="true">
-        <div class="front-strip-track" data-front-marquee>
-            <div class="front-strip-group">
-                <figure><img src="images/orion-apollo-keyart.jpg" alt="" loading="lazy" decoding="async"></figure>
-                <figure><img src="images/project-orion-apollo.jpg" alt="" loading="lazy" decoding="async"></figure>
-                <figure><img src="images/banner.png" alt="" loading="lazy" decoding="async"></figure>
-                <figure><img src="images/gso.png" alt="" loading="lazy" decoding="async"></figure>
-                <figure><img src="images/logo-hero.jpg" alt="" loading="lazy" decoding="async"></figure>
-                <figure><img src="images/news-default-cover.png" alt="" loading="lazy" decoding="async"></figure>
-            </div>
-        </div>
-    </div>
-
     <div class="page-shell home-page-cta">
     <section class="support-cta" data-aos="zoom-in">
         <div>
