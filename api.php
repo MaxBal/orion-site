@@ -79,6 +79,24 @@ function api_success($data) {
     exit;
 }
 
+// Route: GET /api (info)
+if ($uri === '/api') {
+    api_success([
+        'name' => 'Project Orion Reborn API',
+        'version' => '1.0.0',
+        'endpoints' => [
+            'POST /api/login',
+            'POST /api/refresh',
+            'GET /api/servers',
+            'GET /api/servers/{ip}:{port}/status',
+            'GET /api/updates/manifest',
+            'GET /api/updates/{version}/{path}',
+            'GET /api/stats/{account_id}',
+            'GET /api/stats/{account_id}/history'
+        ]
+    ]);
+}
+
 // Route: POST /api/login
 if ($method === 'POST' && $uri === '/api/login') {
     $input = json_decode(file_get_contents('php://input'), true);
