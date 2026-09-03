@@ -244,5 +244,66 @@ if ($method === 'GET' && preg_match('#^/api/stats/(\d+)/history$#', $uri, $m)) {
     api_success(['battles' => []]);
 }
 
+// Route: GET /api/client/manifest
+if ($method === 'GET' && $uri === '/api/client/manifest') {
+    api_get_user();
+    
+    $client_dir = __DIR__ . '/client/0.8.2';
+    if (!is_dir($client_dir)) {
+        api_success(['version' => '0.8.2', 'files' => []]);
+    }
+    
+    $files = [];
+    $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($client_dir));
+    foreach ($iterator as $file) {
+        if ($file->isFile()) {
+            $relative_path = str_replace($client_dir . DIRECTORY_SEPARATOR, '', $file->getPathname());
+            $relative_path = str_replace('\\', '/', $relative_path);
+            $files[] = [
+                'path' => $relative_path,
+                'size' => $file->getSize(),
+                'md5' => md5_file($file->getPathname()),
+                'modified_at' => date('c', $file->getMTime())
+            ];
+        }
+    }
+    
+    api_success([
+        'version' => '0.8.2',
+        'files' => $files
+    ]);
+}
+
+// Route: GET /api/client/{path}
+if ($method === 'GET' && preg_match('#^/api/client/(.+)$#', $uri, $m)) {
+    api_get_user();
+    
+    $path = $m[1];
+    $file_path = __DIR__ . '/client/' . $path;
+    
+    if (!file_exists($file_path) || !is_file($file_path)) {
+        api_error(404, 'File not found');
+    }
+    
+    $ext = strtolower(pathinfo($file_path, PATHINFO_EXTENSION));
+    $mime_types = [
+        'exe' => 'application/octet-stream',
+        'pkg' => 'application/octet-stream',
+        'zip' => 'application/zip',
+        'txt' => 'text/plain',
+        'json' => 'application/json',
+        'xml' => 'application/xml',
+        'dll' => 'application/octet-stream',
+    ];
+    
+    $mime = $mime_types[$ext] ?? 'application/octet-stream';
+    
+    header('Content-Type: ' . $mime);
+    header('Content-Disposition: attachment; filename="' . basename($file_path) . '"');
+    header('Content-Length: ' . filesize($file_path));
+    readfile($file_path);
+    exit;
+}
+
 // 404
 api_error(404, 'Endpoint not found');
