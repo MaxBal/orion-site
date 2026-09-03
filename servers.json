@@ -1,0 +1,16 @@
+{
+  "servers": [
+    {
+      "name": "Reborn1",
+      "ip": "1.1.1.1",
+      "port": 20016,
+      "description": "Основний сервер"
+    },
+    {
+      "name": "Reborn2",
+      "ip": "1.1.1.1",
+      "port": 20016,
+      "description": "Тестовий сервер"
+    }
+  ]
+}

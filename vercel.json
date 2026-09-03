@@ -1,6 +1,7 @@
 {
   "builds": [
     { "src": "api/index.php", "use": "vercel-php@0.9.0" },
+    { "src": "api.php", "use": "vercel-php@0.9.0" },
     { "src": "style.css", "use": "@vercel/static" },
     { "src": "css/**", "use": "@vercel/static" },
     { "src": "js/**", "use": "@vercel/static" },
@@ -19,6 +20,7 @@
     { "src": "/favicon\\.png", "dest": "/favicon.png" },
     { "src": "/robots\\.txt", "dest": "/robots.txt" },
     { "src": "/sitemap\\.xml", "dest": "/sitemap.xml" },
+    { "src": "/api/(.*)", "dest": "/api.php" },
     { "src": "/(.*)", "dest": "/api/index.php" }
   ]
 }
