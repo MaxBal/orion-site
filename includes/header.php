@@ -61,27 +61,15 @@ $portal_labels = [
 $menu_items = [
     'ru' => [
         ['key' => 'index',         'label' => 'ГЛАВНАЯ',        'url' => 'index.php'],
-        ['key' => 'download',      'label' => 'ИГРА',           'url' => 'download.php'],
-        ['key' => 'players',       'label' => 'СООБЩЕСТВО',     'url' => 'players.php'],
-        ['key' => 'subscriptions', 'label' => 'ПОДПИСКИ',       'url' => 'subscriptions.php'],
-        ['key' => 'changelog',     'label' => 'ОБНОВЛЕНИЯ',     'url' => 'changelog.php'],
-        ['key' => 'roadmap',       'label' => 'ДОРОЖНАЯ КАРТА', 'url' => 'roadmap.php'],
+        ['key' => 'changelog',     'label' => 'НОВОСТИ',        'url' => 'changelog.php'],
     ],
     'uk' => [
         ['key' => 'index',         'label' => 'ГОЛОВНА',        'url' => 'index.php'],
-        ['key' => 'download',      'label' => 'ГРА',            'url' => 'download.php'],
-        ['key' => 'players',       'label' => 'СПІЛЬНОТА',      'url' => 'players.php'],
-        ['key' => 'subscriptions', 'label' => 'ПІДПИСКИ',       'url' => 'subscriptions.php'],
-        ['key' => 'changelog',     'label' => 'ОНОВЛЕННЯ',      'url' => 'changelog.php'],
-        ['key' => 'roadmap',       'label' => 'ДОРОЖНЯ КАРТА',  'url' => 'roadmap.php'],
+        ['key' => 'changelog',     'label' => 'НОВИНИ',         'url' => 'changelog.php'],
     ],
     'en' => [
         ['key' => 'index',         'label' => 'HOME',           'url' => 'index.php'],
-        ['key' => 'download',      'label' => 'GAME',           'url' => 'download.php'],
-        ['key' => 'players',       'label' => 'COMMUNITY',      'url' => 'players.php'],
-        ['key' => 'subscriptions', 'label' => 'SUBSCRIPTIONS',  'url' => 'subscriptions.php'],
-        ['key' => 'changelog',     'label' => 'UPDATES',        'url' => 'changelog.php'],
-        ['key' => 'roadmap',       'label' => 'ROADMAP',        'url' => 'roadmap.php'],
+        ['key' => 'changelog',     'label' => 'NEWS',           'url' => 'changelog.php'],
     ],
 ][$header_lang] ?? [];
 ?>
@@ -111,9 +99,6 @@ $menu_items = [
         <div class="b-portalmenu-links">
             <ul>
                 <li class="active"><span><?php echo htmlspecialchars($portal_labels['portal'], ENT_QUOTES, 'UTF-8'); ?></span></li>
-                <li><a href="https://discord.gg/fM4Dqess6r" target="_blank" rel="noopener noreferrer"><?php echo htmlspecialchars($portal_labels['discord'], ENT_QUOTES, 'UTF-8'); ?></a></li>
-                <li><a href="<?php echo $header_url('bugs.php'); ?>"><?php echo htmlspecialchars($portal_labels['bugs'], ENT_QUOTES, 'UTF-8'); ?></a></li>
-                <li><a href="<?php echo $header_url('donate.php'); ?>"><?php echo htmlspecialchars($portal_labels['support'], ENT_QUOTES, 'UTF-8'); ?></a></li>
             </ul>
         </div>
         <div class="b-portalmenu-right">
