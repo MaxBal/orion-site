@@ -205,23 +205,23 @@ if ($error === '' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($stmt->fetchColumn() > 0) {
                     $error = $copy['one_per_ip'];
                 } else {
-                $password_hash = md5($password);
-                $now = date('Y-m-d H:i:s');
+                    $password_hash = md5($password);
+                    $now = date('Y-m-d H:i:s');
 
-                $pdo->beginTransaction();
+                    $pdo->beginTransaction();
 
-                // Если подтверждение выключено — аккаунт сразу активен.
-                $verified = EMAIL_VERIFICATION_ENABLED ? 0 : 1;
-                $stmt = $pdo->prepare("INSERT INTO accounts (username, email, normalized_name, password_hash, is_verified, reg_ip, created_at, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$username, $email, $normalized, $password_hash, $verified, $reg_ip, $now, $now]);
+                    // Если подтверждение выключено — аккаунт сразу активен.
+                    $verified = EMAIL_VERIFICATION_ENABLED ? 0 : 1;
+                    $stmt = $pdo->prepare("INSERT INTO accounts (username, email, normalized_name, password_hash, is_verified, reg_ip, created_at, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$username, $email, $normalized, $password_hash, $verified, $reg_ip, $now, $now]);
 
-                $new_id = $pdo->lastInsertId();
+                    $new_id = $pdo->lastInsertId();
 
-                $stmt = $pdo->prepare("INSERT INTO dossier (account_id) VALUES (?)");
-                $stmt->execute([$new_id]);
+                    $stmt = $pdo->prepare("INSERT INTO dossier (account_id) VALUES (?)");
+                    $stmt->execute([$new_id]);
 
-                if ($discord_registration) {
-                    $stmt = $pdo->prepare("INSERT INTO account_discord_links (account_id, discord_id, discord_username, linked_at) VALUES (?, ?, ?, NOW())");
+                    if ($discord_registration) {
+                        $stmt = $pdo->prepare("INSERT INTO account_discord_links (account_id, discord_id, discord_username, linked_at) VALUES (?, ?, ?, NOW())");
                     $stmt->execute([$new_id, $discord_registration['discord_id'], $discord_registration['discord_username']]);
                     $discord_token = $discord_registration['token'] ?? [];
                     if (!empty($discord_token['access_token']) && !discord_store_oauth_tokens($pdo, $new_id, $discord_registration['discord_id'], $discord_token)) {
