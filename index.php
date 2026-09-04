@@ -323,9 +323,8 @@ $roadmap_preview = array_values(array_filter($roadmap['phases'], static function
 }));
 $server_state = orion_server_state($pdo);
 
-// Всплывающее окно (донат-модалка) показывается один раз в начале новой сессии,
-// затем не чаще, чем раз в 30 минут.
-$show_popup = should_show_session_popup();
+// Всплывающее окно отключено
+$show_popup = false;
 
 $page_title = $copy['page_title'];
 $page_description = $copy['page_description'];
@@ -404,84 +403,8 @@ require __DIR__ . '/includes/header.php';
     </section>
 
     <div class="page-shell home-page-body">
-    <section class="home-subscriptions-banner reveal" aria-labelledby="homeSubscriptionsTitle">
-        <div class="section-heading">
-            <div>
-                <div class="home-subscriptions-kicker"><span aria-hidden="true"></span>ORION MEMBERSHIP</div>
-                <h2 id="homeSubscriptionsTitle"><?php echo h($copy['subscription_title']); ?></h2>
-            </div>
-            <p class="section-note"><?php echo h($copy['subscription_lead']); ?></p>
-        </div>
-        <div class="home-subscriptions-grid">
-            <ol class="home-subscriptions-tiers" aria-label="<?php echo h($copy['all_plans']); ?>">
-                <li class="home-subscription-tier home-subscription-tier--lite"><a href="<?php echo h($locale_url('subscriptions.php#lite')); ?>"><em>01</em><span>Lite</span><strong>$1</strong><small><?php echo h($copy['per_week']); ?></small></a></li>
-                <li class="home-subscription-tier home-subscription-tier--plus"><a href="<?php echo h($locale_url('subscriptions.php#plus')); ?>"><em>02</em><span>Plus</span><strong>$5</strong><small><?php echo h($copy['per_week']); ?></small></a></li>
-                <li class="home-subscription-tier home-subscription-tier--pro"><a href="<?php echo h($locale_url('subscriptions.php#pro')); ?>"><em>03</em><span>Pro</span><strong>$10</strong><small><?php echo h($copy['per_week']); ?></small></a></li>
-                <li class="home-subscription-tier home-subscription-tier--max"><a href="<?php echo h($locale_url('subscriptions.php#max')); ?>"><em>04</em><span>Max</span><strong>$20</strong><small><?php echo h($copy['per_week']); ?></small></a></li>
-            </ol>
-            <div class="home-subscriptions-stage">
-                <span class="front-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-                <div class="home-subscriptions-orbit" aria-hidden="true"><span>ORION</span><i></i><i></i><i></i></div>
-                <div class="home-subscriptions-copy">
-                    <p class="home-subscriptions-note"><?php echo h($copy['subscription_note']); ?></p>
-                    <p><?php echo h($copy['membership_lead']); ?></p>
-                    <div class="home-subscriptions-actions">
-                        <a class="btn btn-primary" href="<?php echo h($locale_url('subscriptions.php')); ?>"><?php echo h($copy['explore_plans']); ?></a>
-                        <span><?php echo h($copy['all_plans']); ?></span>
-                    </div>
-                </div>
-                <span class="home-subscriptions-watermark" aria-hidden="true">0.8.2</span>
-            </div>
-        </div>
-    </section>
 
-    <section class="section-block home-roadmap-section">
-        <div class="section-heading" data-aos="fade-up">
-            <div>
-                <p class="eyebrow"><?php echo h($roadmap['eyebrow']); ?></p>
-                <h2><?php echo h($copy['roadmap_transition']); ?></h2>
-            </div>
-            <a href="<?php echo h($locale_url('roadmap.php')); ?>"><?php echo h($roadmap['open_label']); ?> →</a>
-        </div>
-
-        <div class="roadmap-preview reveal">
-            <div class="roadmap-preview-main">
-                <span class="front-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-                <div class="roadmap-preview-topline">
-                    <span class="roadmap-live-chip"><span aria-hidden="true"></span><?php echo h($roadmap['updated']); ?></span>
-                    <span class="roadmap-progress-code">ORION://0.8.2</span>
-                </div>
-                <h3><?php echo h($roadmap['title']); ?></h3>
-                <p><?php echo h($roadmap['description']); ?></p>
-                <div class="front-countdown" data-front-countdown="2026-08-30T00:00:00">
-                    <span class="front-countdown-label"><?php echo h($copy['launch_label']); ?></span>
-                    <div class="front-countdown-boxes">
-                        <div class="front-countdown-box"><b data-countdown-days>00</b><span><?php echo h($copy['cd_days']); ?></span></div>
-                        <div class="front-countdown-box"><b data-countdown-hours>00</b><span><?php echo h($copy['cd_hours']); ?></span></div>
-                        <div class="front-countdown-box"><b data-countdown-minutes>00</b><span><?php echo h($copy['cd_minutes']); ?></span></div>
-                        <div class="front-countdown-box"><b data-countdown-seconds>00</b><span><?php echo h($copy['cd_seconds']); ?></span></div>
-                    </div>
-                </div>
-                <div class="roadmap-preview-progress">
-                    <div><span><?php echo h($roadmap['progress_label']); ?></span><strong><?php echo intval($roadmap['progress_value']); ?>%</strong></div>
-                    <div class="roadmap-progress-track" aria-hidden="true"><span style="--roadmap-progress: <?php echo intval($roadmap['progress_value']); ?>%"></span></div>
-                    <small><?php echo h($roadmap['progress_note']); ?></small>
-                </div>
-                <a class="btn btn-primary" href="<?php echo h($locale_url('roadmap.php')); ?>"><?php echo h($roadmap['open_label']); ?></a>
-            </div>
-
-            <div class="roadmap-preview-stages" aria-label="<?php echo h($roadmap['timeline_label']); ?>">
-                <?php foreach ($roadmap_preview as $preview_phase): ?>
-                    <a class="roadmap-preview-stage roadmap-preview-stage--<?php echo h($preview_phase['status']); ?>" href="<?php echo h($locale_url('roadmap.php#' . $preview_phase['id'])); ?>">
-                        <span class="roadmap-preview-marker" aria-hidden="true"><?php echo $preview_phase['status'] === 'done' ? '✓' : h($preview_phase['number']); ?></span>
-                        <span class="roadmap-preview-stage-copy">
-                            <small><?php echo h($preview_phase['period']); ?></small>
-                            <strong><?php echo h($preview_phase['title']); ?></strong>
-                        </span>
-                        <span class="roadmap-status roadmap-status--<?php echo h($preview_phase['status']); ?>"><i aria-hidden="true"></i><?php echo h($roadmap['statuses'][$preview_phase['status']]); ?></span>
-                    </a>
-                <?php endforeach; ?>
-            </div>
+    <section class="section-block">
         </div>
     </section>
 
@@ -578,24 +501,6 @@ require __DIR__ . '/includes/header.php';
         </div>
     </section>
     </div>
-
-    <div class="page-shell home-page-cta">
-    <section class="support-cta" data-aos="zoom-in">
-        <div>
-            <p class="eyebrow"><?php echo h($copy['support']); ?></p>
-            <h2><?php echo h($copy['support_title']); ?></h2>
-            <p><?php echo h($copy['support_note']); ?></p>
-            <div class="support-perks">
-                <span><i aria-hidden="true"></i><?php echo h($copy['perk_free']); ?></span>
-                <span><i aria-hidden="true"></i><?php echo h($copy['perk_dev']); ?></span>
-                <span><i aria-hidden="true"></i><?php echo h($copy['perk_economy']); ?></span>
-                <span><i aria-hidden="true"></i><?php echo h($copy['perk_community']); ?></span>
-            </div>
-        </div>
-        <button class="btn btn-primary" type="button" data-modal-open="donateModal"><?php echo h($copy['support_button']); ?></button>
-    </section>
-    </div>
 </main>
-<?php require __DIR__ . '/includes/donate_modal.php'; ?>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
