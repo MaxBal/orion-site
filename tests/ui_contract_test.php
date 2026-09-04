@@ -362,9 +362,7 @@ $groups = [
         expectContains('style.css', '.video-card video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; }', 'Download video can crop at desktop widths');
         expectNotContains('style.css', '.video-card video { min-height: 0; }', 'Obsolete mobile-only video fix remains');
         expectRegex('style.css', '~@media \(prefers-reduced-motion: reduce\) \{\s*body \{ animation: none; \}\s*\.dl-pane\.active \{ animation: none; \}\s*\.donate-modal \{ transition: none; \}~s', 'Reduced-motion overrides do not cover download panels and the donation modal');
-        expectContains('download.php', '<b>Важно:</b> патч внутри архива с игрой — <b>устаревший</b>. Актуальный патч находится на вкладке <a href="#patch" onclick="dlTab(\'patch\');return false;">«⚡ Скачать патч»</a> — обязательно установите его после распаковки игры, иначе подключиться к серверу не получится.', 'Current-patch connection warning was abridged');
-        expectContains('download.php', 'Если совместимый клиент <b>уже установлен</b> — не нужно скачивать его заново. <b>Один файл</b> <code class="kbd">scripts_config.xml</code> прописывает адрес сервера прямо в клиент. Никаких <code class="kbd">hosts</code>, прав администратора и <code class="kbd">.bat</code> — работает и на Windows, и на Linux.', 'Patch compatibility instructions were abridged');
-        expectContains('download.php', 'Скачайте <code class="kbd">scripts_config.xml</code> в карточке загрузки.', 'Patch download instruction is not layout-neutral');
+        expectContains('download.php', 'launcher/RebornLauncher-v1.1-R2.zip', 'Launcher archive download is missing');
         expectNotContains('download.php', 'кнопкой слева', 'Desktop-only patch direction remains');
     },
     'theme' => static function (): void {
@@ -404,8 +402,6 @@ $groups = [
         expectNotContains('js/site.js', "'.dl-tab[data-tab=\"' + requested + '\"]'", 'Download hash is interpolated into a selector');
         expectContains('download.php', 'class="dl-tabs" role="tablist"', 'Download tablist semantics are missing');
         expectContains('download.php', 'aria-controls="pane-client" aria-selected="true"', 'Initial client tab semantics are missing');
-        expectContains('download.php', 'aria-controls="pane-patch" aria-selected="false"', 'Initial patch tab semantics are missing');
-        expectContains('download.php', 'id="pane-patch" role="tabpanel" aria-labelledby="dl-tab-patch" hidden', 'Initial patch pane state is missing');
         expectNotContains('download.php', 'function dlTab(name)', 'Download behavior remains duplicated inline');
         expectContains('js/site.js', "document.execCommand('copy')", 'Clipboard fallback was removed');
         expectContains('js/site.js', "document.body.getAttribute('data-show-popup') === '1'", 'Donation auto-popup hook was removed');

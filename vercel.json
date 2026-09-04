@@ -6,6 +6,7 @@
     { "src": "js/**", "use": "@vercel/static" },
     { "src": "images/**", "use": "@vercel/static" },
     { "src": "fonts/**", "use": "@vercel/static" },
+    { "src": "launcher/**", "use": "@vercel/static" },
     { "src": "favicon.png", "use": "@vercel/static" },
     { "src": "robots.txt", "use": "@vercel/static" },
     { "src": "sitemap.xml", "use": "@vercel/static" }
@@ -15,6 +16,7 @@
     { "src": "/js/(.*)", "dest": "/js/$1" },
     { "src": "/images/(.*)", "dest": "/images/$1" },
     { "src": "/fonts/(.*)", "dest": "/fonts/$1" },
+    { "src": "/launcher/(.*)", "dest": "/launcher/$1" },
     { "src": "/style\\.css", "dest": "/style.css" },
     { "src": "/favicon\\.png", "dest": "/favicon.png" },
     { "src": "/robots\\.txt", "dest": "/robots.txt" },
