@@ -258,7 +258,6 @@ if ($error === '' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $success = $copy['success'];
             }
-            }
         } catch (Exception $e) {
             if ($pdo->inTransaction()) {
                 $pdo->rollBack();
@@ -270,7 +269,6 @@ if ($error === '' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = $copy['internal'];
             }
         }
-    }
     }
 }
 $page_title = $copy['page_title'];
