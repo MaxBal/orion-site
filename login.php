@@ -141,20 +141,6 @@ if (auth_attempts_blocked($pdo, 'login', $client_ip, $max_attempts, $lockout_tim
             if ($ban_reason !== null) {
                 $error = $copy['banned'];
                 $ban_reason_for_display = $ban_reason;
-            } elseif (EMAIL_VERIFICATION_ENABLED && $user && md5($password) === $user['password_hash'] && intval($user['is_verified']) !== 1) {
-                // Пароль верный, но email не подтверждён — шлём код и ведём на verify.
-                $vemail = (string)($user['email'] ?? '');
-                if ($vemail !== '' && can_request_email_code($pdo, $vemail, 'register')) {
-                    try {
-                        $code = create_email_code($pdo, $user['id'], $vemail, 'register');
-                        send_email($vemail, $copy['email_subject'], render_code_email($copy['email_title'], $copy['email_body'], $code));
-                    } catch (Exception $mailEx) {
-                        error_log('Login resend code error: ' . $mailEx->getMessage());
-                    }
-                }
-                $_SESSION['pending_verify_email'] = $vemail;
-                header('Location: ' . $locale_url('verify.php?email=' . urlencode($vemail)));
-                exit;
             } elseif ($user && md5($password) === $user['password_hash']) {
                 session_regenerate_id(true);
                 $_SESSION['user_id'] = $user['id'];

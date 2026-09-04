@@ -234,28 +234,6 @@ if ($error === '' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 auth_attempts_reset($pdo, 'register', $client_ip);
                 discord_clear_pending_registration();
 
-                if (EMAIL_VERIFICATION_ENABLED) {
-                    // Отправляем код подтверждения и ведём на страницу ввода кода.
-                    try {
-                        $code = create_email_code($pdo, $new_id, $email, 'register');
-                        send_email(
-                            $email,
-                            $copy['email_subject'],
-                            render_code_email(
-                                $copy['email_title'],
-                                $copy['email_body_prefix'] . $username . $copy['email_body_suffix'],
-                                $code,
-                                $ui_lang
-                            )
-                        );
-                    } catch (Exception $mailEx) {
-                        error_log('Register send code error: ' . $mailEx->getMessage());
-                    }
-                    $_SESSION['pending_verify_email'] = $email;
-                    header('Location: ' . $locale_url('verify.php?email=' . urlencode($email)));
-                    exit;
-                }
-
                 $success = $copy['success'];
                 }
             }
