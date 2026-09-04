@@ -257,6 +257,7 @@ if ($error === '' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 $success = $copy['success'];
+                }
             }
         } catch (Exception $e) {
             if ($pdo->inTransaction()) {
