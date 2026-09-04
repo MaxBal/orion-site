@@ -210,8 +210,8 @@ if ($error === '' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     $pdo->beginTransaction();
 
-                    // Если подтверждение выключено — аккаунт сразу активен.
-                    $verified = EMAIL_VERIFICATION_ENABLED ? 0 : 1;
+                    // Подтверждение email отключено — аккаунт сразу активен.
+                    $verified = 1;
                     $stmt = $pdo->prepare("INSERT INTO accounts (username, email, normalized_name, password_hash, is_verified, reg_ip, created_at, last_login) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
                     $stmt->execute([$username, $email, $normalized, $password_hash, $verified, $reg_ip, $now, $now]);
 

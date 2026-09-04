@@ -180,7 +180,6 @@ if (auth_attempts_blocked($pdo, 'login', $client_ip, $max_attempts, $lockout_tim
             $error = $copy['internal'];
         }
     }
-    }
 }
 $page_title = $copy['page_title'];
 $page_description = $copy['page_description'];
@@ -188,7 +187,7 @@ $page_path = 'login.php';
 $seo_index = false;
 $active_page = '';
 $banner_subtext = $copy['banner_subtext'];
-$head_extra = '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
+$head_extra = '';
 require __DIR__ . '/includes/header.php';
 ?>
 
