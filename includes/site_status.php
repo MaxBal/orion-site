@@ -25,24 +25,43 @@ function orion_server_status_error($key): string
 }
 
 function orion_server_state($pdo) {
-    $status = strtolower((string)get_setting($pdo, 'server_status', 'online'));
-    if (!in_array($status, ['online', 'offline'], true)) {
-        $status = 'online';
+    // Реальная проверка сервера по UDP
+    $ip = '62.84.175.101';
+    $ports = [20016, 20017];
+    $is_online = false;
+    $players = 0;
+    $max_players = 300;
+    
+    foreach ($ports as $port) {
+        $sock = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+        if ($sock) {
+            socket_set_option($sock, SOL_SOCKET, SO_RCVTIMEO, ['sec' => 2, 'usec' => 0]);
+            @socket_sendto($sock, "\xff\xff\xff\xff\x54Source Engine Query\x00", 25, 0, $ip, $port);
+            $buf = ''; $from = ''; $rport = 0;
+            if (@socket_recvfrom($sock, $buf, 4096, 0, $from, $rport)) {
+                $is_online = true;
+                if (strlen($buf) > 5) {
+                    $players = ord($buf[4]);
+                    $max_players = ord($buf[5]);
+                }
+            }
+            socket_close($sock);
+        }
+        if ($is_online) break;
     }
-    $message = trim((string)get_setting($pdo, 'server_status_message', ''));
-    $updated_at = null;
-    try {
-        $stmt = $pdo->prepare("SELECT MAX(updated_at) FROM site_settings WHERE setting_key IN ('server_status', 'server_status_message')");
-        $stmt->execute();
-        $updated_at = $stmt->fetchColumn() ?: null;
-    } catch (Exception $e) {
-        $updated_at = null;
+    
+    $message = '';
+    if ($is_online) {
+        $message = "Players: $players/$max_players";
     }
+    
     return [
-        'status' => $status,
-        'is_online' => $status === 'online',
+        'status' => $is_online ? 'online' : 'offline',
+        'is_online' => $is_online,
         'message' => $message,
-        'updated_at' => $updated_at,
+        'players' => $players,
+        'max_players' => $max_players,
+        'updated_at' => date('Y-m-d H:i:s'),
     ];
 }
 

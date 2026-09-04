@@ -443,64 +443,7 @@ require __DIR__ . '/includes/header.php';
     </section>
     <?php endif; ?>
 
-    <section class="section-block">
-        <div class="section-heading" data-aos="fade-up">
-            <div>
-                <p class="eyebrow"><?php echo h($copy['community']); ?></p>
-                <h2><?php echo h($copy['news']); ?></h2>
-            </div>
-            <p class="section-note"><?php echo h($copy['news_note']); ?></p>
-            <a href="<?php echo h($locale_url('changelog.php')); ?>"><?php echo h($copy['all_updates']); ?></a>
-        </div>
-        <div class="news-feed">
-            <?php foreach ($news_items as $news_idx => $news): ?>
-                <?php
-                $media = $news['media'] ?? [];
-                $lead_media = $media[0] ?? null;
-                ?>
-                <article class="news-card<?php echo $news_idx === 0 ? ' news-card--lead' : ''; ?>" data-aos="fade-up" data-aos-delay="<?php echo min($news_idx * 70, 350); ?>">
-                    <div class="news-card-media">
-                        <?php if ($lead_media && $lead_media['media_type'] === 'video'): ?>
-                            <video src="<?php echo h($lead_media['file_path']); ?>" controls preload="metadata"></video>
-                        <?php else: ?>
-                            <img src="<?php echo h($lead_media['file_path'] ?? ORION_NEWS_COVER); ?>" alt="<?php echo h($news['title']); ?>" data-i18n-ignore loading="lazy" decoding="async">
-                        <?php endif; ?>
-                    </div>
-                    <div class="news-card-copy">
-                        <div class="news-meta">
-                            <span><?php echo h(format_news_date($news['published_at'] ?: $news['created_at'])); ?></span>
-                            <?php if (!empty($news['author_name'])): ?><span data-i18n-ignore><?php echo h($news['author_name']); ?></span><?php else: ?><span><?php echo h($copy['administration']); ?></span><?php endif; ?>
-                            <?php if (intval($news['is_pinned']) === 1): ?><span><?php echo h($copy['pinned']); ?></span><?php endif; ?>
-                        </div>
-                        <h3 data-i18n-ignore><?php echo h($news['title']); ?></h3>
-                        <?php if (trim((string)$news['summary']) !== ''): ?>
-                            <p data-i18n-ignore><?php echo h($news['summary']); ?></p>
-                        <?php endif; ?>
-                        <div class="news-body" data-i18n-ignore><?php echo nl2br(h($news['body'])); ?></div>
-                        <?php if (count($media) > 1): ?>
-                            <div class="news-media-strip">
-                                <?php foreach ($media as $idx => $item): ?>
-                                    <?php if ($idx === 0) { continue; } ?>
-                                    <?php if ($item['media_type'] === 'image'): ?>
-                                        <img src="<?php echo h($item['file_path']); ?>" alt="<?php echo h($item['original_name']); ?>" data-i18n-ignore class="news-media-tile">
-                                    <?php else: ?>
-                                        <video src="<?php echo h($item['file_path']); ?>" class="news-media-tile" controls preload="metadata"></video>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                </article>
-            <?php endforeach; ?>
-            <?php if (empty($news_items)): ?>
-                <div class="empty-state">
-                    <h3><?php echo h($copy['no_news']); ?></h3>
-                    <p><?php echo h($copy['no_news_note']); ?></p>
-                </div>
-            <?php endif; ?>
-        </div>
-    </section>
-    </div>
+</div>
 </main>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
