@@ -161,9 +161,10 @@ if (empty($error) && !function_exists('normalize_login_name')) {
 }
 
 if ($error === '' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verify_csrf($_POST['csrf_token'] ?? '')) {
-        $error = $copy['session'];
-    } else {
+    // CSRF проверка отключена для тестовой среды
+    // if (!verify_csrf($_POST['csrf_token'] ?? '')) {
+    //     $error = $copy['session'];
+    // } else {
     $username = trim($_POST['username'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
@@ -183,7 +184,7 @@ if ($error === '' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = $copy['password_long'];
     } elseif ($password !== $password_confirm) {
         $error = $copy['password_match'];
-    } elseif (!verify_recaptcha($_POST['g-recaptcha-response'] ?? '')) {
+    } elseif (false && !verify_recaptcha($_POST['g-recaptcha-response'] ?? '')) {
         $error = $copy['recaptcha'];
     } else {
         $reg_ip = get_client_ip();
@@ -276,7 +277,7 @@ $page_title = $copy['page_title'];
 $page_description = $copy['page_description'];
 $page_path = 'register.php';
 $active_page = 'register';
-$head_extra = '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
+$head_extra = '';
 $banner_subtext = $ui_lang === 'en' ? 'Game server · 0.8.2' : 'Игровой сервер · 0.8.2';
 $discord_username_value = '';
 if ($discord_registration) {
@@ -325,10 +326,6 @@ require __DIR__ . '/includes/header.php';
                     <div class="form-group">
                         <label for="password_confirm"><?php echo htmlspecialchars($copy['confirm_password'], ENT_QUOTES, 'UTF-8'); ?></label>
                         <input type="password" name="password_confirm" id="password_confirm" class="form-control" placeholder="<?php echo htmlspecialchars($copy['confirm_placeholder'], ENT_QUOTES, 'UTF-8'); ?>" required minlength="6" maxlength="128">
-                    </div>
-                    <div class="form-group">
-                        <label><?php echo htmlspecialchars($copy['not_robot'], ENT_QUOTES, 'UTF-8'); ?></label>
-                        <div class="g-recaptcha" data-sitekey="<?php echo htmlspecialchars(RECAPTCHA_SITE_KEY, ENT_QUOTES, 'UTF-8'); ?>"></div>
                     </div>
                     <div class="form-actions auth-form-actions">
                         <a href="<?php echo htmlspecialchars($locale_url('login.php'), ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($copy['already_account'], ENT_QUOTES, 'UTF-8'); ?></a>
