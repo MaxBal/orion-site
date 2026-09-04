@@ -25,9 +25,9 @@ function orion_server_status_error($key): string
 }
 
 function orion_server_state($pdo) {
-    // Кешируем статус на 30 секунд в сессии
+    // Кешируем статус на 60 секунд в сессии
     $cache_key = 'server_status_cache';
-    $cache_ttl = 30;
+    $cache_ttl = 60;
     
     if (isset($_SESSION[$cache_key]) && ($_SESSION[$cache_key]['time'] ?? 0) > time() - $cache_ttl) {
         return $_SESSION[$cache_key]['data'];
@@ -35,7 +35,7 @@ function orion_server_state($pdo) {
     
     // Реальная проверка сервера по UDP
     $ip = '62.84.175.101';
-    $ports = [20016, 20017];
+    $ports = [20016];
     $is_online = false;
     $players = 0;
     $max_players = 300;
@@ -43,7 +43,7 @@ function orion_server_state($pdo) {
     foreach ($ports as $port) {
         $sock = @socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         if ($sock) {
-            socket_set_option($sock, SOL_SOCKET, SO_RCVTIMEO, ['sec' => 1, 'usec' => 0]);
+            socket_set_option($sock, SOL_SOCKET, SO_RCVTIMEO, ['sec' => 0, 'usec' => 500000]); // 0.5 sec
             @socket_sendto($sock, "\xff\xff\xff\xff\x54Source Engine Query\x00", 25, 0, $ip, $port);
             $buf = ''; $from = ''; $rport = 0;
             if (@socket_recvfrom($sock, $buf, 4096, 0, $from, $rport)) {
