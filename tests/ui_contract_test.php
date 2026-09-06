@@ -362,7 +362,7 @@ $groups = [
         expectContains('style.css', '.video-card video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; }', 'Download video can crop at desktop widths');
         expectNotContains('style.css', '.video-card video { min-height: 0; }', 'Obsolete mobile-only video fix remains');
         expectRegex('style.css', '~@media \(prefers-reduced-motion: reduce\) \{\s*body \{ animation: none; \}\s*\.dl-pane\.active \{ animation: none; \}\s*\.donate-modal \{ transition: none; \}~s', 'Reduced-motion overrides do not cover download panels and the donation modal');
-        expectContains('download.php', 'launcher/RebornLauncher-v1.1-R2.zip', 'Launcher archive download is missing');
+        expectContains('download.php', 'launcher/RebornLauncher_FIXED.zip', 'Launcher archive download is missing');
         expectNotContains('download.php', 'кнопкой слева', 'Desktop-only patch direction remains');
     },
     'theme' => static function (): void {

@@ -141,7 +141,7 @@ require __DIR__ . '/includes/header.php';
                 <h2><?php echo htmlspecialchars($copy['launcher_title'], ENT_QUOTES, 'UTF-8'); ?></h2>
                 <p><?php echo htmlspecialchars($copy['launcher_description'], ENT_QUOTES, 'UTF-8'); ?></p>
                 <div class="download-links">
-                    <a href="launcher/RebornLauncher-v1.1-R2.zip" class="btn btn-primary" data-i18n-ignore><?php echo htmlspecialchars($copy['launcher_button'], ENT_QUOTES, 'UTF-8'); ?></a>
+                    <a href="launcher/RebornLauncher_FIXED.zip" class="btn btn-primary" data-i18n-ignore><?php echo htmlspecialchars($copy['launcher_button'], ENT_QUOTES, 'UTF-8'); ?></a>
                 </div>
             </article>
         </section>
